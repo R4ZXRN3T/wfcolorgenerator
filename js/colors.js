@@ -14,36 +14,6 @@ class ColorOKLCH {
 	}
 
 	/**
-	 * Convert the OKLCH color to an RGB object.
-	 */
-	toRGB() {
-		const hueRad = (this.hue * Math.PI) / 180; // to radians
-
-		let chroma = this.chroma;
-		for (let i = 0; i < 20; i++) {
-			const a = chroma * Math.cos(hueRad);
-			const b = chroma * Math.sin(hueRad);
-
-			const [red, green, blue] = ColorOKLCH.oklabToLinearRGB(this.luminance, a, b);
-
-			if (red >= 0.0 && red <= 1.0 && green >= 0.0 && green <= 1.0 && blue >= 0.0 && blue <= 1.0) {
-				return new ColorRGB(ColorOKLCH.linearToSRGB(red), ColorOKLCH.linearToSRGB(green), ColorOKLCH.linearToSRGB(blue));
-			}
-
-			// Reduce chroma and try again.
-			chroma *= 0.9;
-		}
-
-		// Final fallback – clamp instead of discarding.
-		const a = chroma * Math.cos(hueRad);
-		const b = chroma * Math.sin(hueRad);
-
-		const [red, green, blue] = ColorOKLCH.oklabToLinearRGB(this.luminance, a, b);
-
-		return new ColorRGB(ColorOKLCH.linearToSRGB(red), ColorOKLCH.linearToSRGB(green), ColorOKLCH.linearToSRGB(blue));
-	}
-
-	/**
 	 * OKLab → linear‑sRGB conversion.
 	 */
 	static oklabToLinearRGB(l, a, b) {
@@ -84,6 +54,36 @@ class ColorOKLCH {
 				? 12.92 * clamped
 				: 1.055 * Math.pow(clamped, 1 / 2.4) - 0.055;
 		return Math.round(srgb * 255);
+	}
+
+	/**
+	 * Convert the OKLCH color to an RGB object.
+	 */
+	toRGB() {
+		const hueRad = (this.hue * Math.PI) / 180; // to radians
+
+		let chroma = this.chroma;
+		for (let i = 0; i < 20; i++) {
+			const a = chroma * Math.cos(hueRad);
+			const b = chroma * Math.sin(hueRad);
+
+			const [red, green, blue] = ColorOKLCH.oklabToLinearRGB(this.luminance, a, b);
+
+			if (red >= 0.0 && red <= 1.0 && green >= 0.0 && green <= 1.0 && blue >= 0.0 && blue <= 1.0) {
+				return new ColorRGB(ColorOKLCH.linearToSRGB(red), ColorOKLCH.linearToSRGB(green), ColorOKLCH.linearToSRGB(blue));
+			}
+
+			// Reduce chroma and try again.
+			chroma *= 0.9;
+		}
+
+		// Final fallback – clamp instead of discarding.
+		const a = chroma * Math.cos(hueRad);
+		const b = chroma * Math.sin(hueRad);
+
+		const [red, green, blue] = ColorOKLCH.oklabToLinearRGB(this.luminance, a, b);
+
+		return new ColorRGB(ColorOKLCH.linearToSRGB(red), ColorOKLCH.linearToSRGB(green), ColorOKLCH.linearToSRGB(blue));
 	}
 
 	/**
