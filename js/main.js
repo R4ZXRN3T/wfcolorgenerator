@@ -3,7 +3,7 @@ import {getAllColorPalettes} from "./generateColors.js";
 /**
  * Render one palette row in the table.
  *
- * @param {string[]} colors   Array of 8 hex strings (Primary, Secondary … Energy 2)
+ * @param {string[]} colors   Array of 8 hex strings (Primary, Secondary … Energy 2)
  * @param {number}    rowIdx  Zero‑based index of this row
  */
 function renderPaletteRow(colors, rowIdx) {
@@ -24,32 +24,18 @@ function renderPaletteRow(colors, rowIdx) {
 
 		// colored swatch
 		const swatch = document.createElement('div');
+		swatch.className = 'color-swatch';
 		swatch.style.backgroundColor = hex;
-		swatch.style.width = '100%';
-		swatch.style.height = '2rem';
-		swatch.style.borderRadius = '4px';
 
 		// hex label
 		const label = document.createElement('span');
+		label.className = 'color-hex-label';
 		label.textContent = hex;
-		label.style.display = 'block';
-		label.style.textAlign = 'center';
-		label.style.marginTop = '0.25rem';
-		label.style.fontSize = '0.75rem';
 
 		td.appendChild(swatch);
 		td.appendChild(label);
 		tr.appendChild(td);
 	});
-
-	// ---- new cell: button to open palette in warframecolorpicker.app ----
-	const btnTd = document.createElement('td');
-	btnTd.className = 'color-cell';
-	const openBtn = document.createElement('button');
-	openBtn.textContent = 'Open';
-	openBtn.style.padding = '0.3rem 0.6rem';
-	openBtn.style.fontSize = '0.75rem';
-	openBtn.style.cursor = 'pointer';
 
 	// Build the paletteEncoded string
 	// Remove '#' and append the 1‑based position
@@ -58,11 +44,20 @@ function renderPaletteRow(colors, rowIdx) {
 		.join('-');
 	const url = `https://www.warframecolorpicker.app/?paletteEncoded=v1___0-${encodedPalette}`;
 
-	openBtn.addEventListener('click', () => {
+	// ---- new cell: button to open palette in warframecolorpicker.app ----
+	const btnTd = document.createElement('td');
+	btnTd.className = 'color-cell';
+	const openLink = document.createElement('a');
+	openLink.textContent = 'Open';
+	openLink.className = 'open-palette-button';   // keeps the same styling
+	openLink.href = url;                           // <-- important
+	openLink.target = '_blank';
+
+	openLink.addEventListener('click', () => {
 		window.open(url, '_blank');
 	});
 
-	btnTd.appendChild(openBtn);
+	btnTd.appendChild(openLink);
 	tr.appendChild(btnTd);
 
 	table.appendChild(tr);

@@ -75,6 +75,43 @@ main {
 	border: 5px solid #444;
 }
 
+.open-palette-button {
+	background-color: #222222;
+	color: #f0f0f0;
+	border: 5px solid #444;
+	padding: 0.2rem 0.6rem;
+	border-radius: 10px;
+	cursor: pointer;
+	align-self: flex-end;
+	transition: background-color 0.3s ease;
+	margin: 0 0 auto auto;
+	font-family: "JetBrains Mono", monospace;
+	font-size: 0.75rem;
+	cursor: pointer;
+	vertical-align: top;
+	width: auto;
+	transform: translateY(-32%);
+	text-decoration: none;
+	display: inline-block;
+}
+
+.open-palette-button:hover, .open-palette-button:active {
+	background-color: #444;
+}
+
+.color-swatch {
+	height: 2rem;
+	width: 100%;
+	border-radius: 4px;
+}
+
+.color-hex-label {
+	display: block;
+	text-align: center;
+	margin-top: 0.25rem;
+	font-size: 0.75rem;
+}
+
 #tone-slider {
 	max-width: 120px;
 	width: 100%;
