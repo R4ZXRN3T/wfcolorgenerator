@@ -1,4 +1,4 @@
-import {ColorOKLCH} from "./colors";
+import {ColorOKLCH} from "./colors.js";
 
 export function getAllColorPalettes(tune, numPalettes = 5) {
 	const colorPalettes = [numPalettes];
