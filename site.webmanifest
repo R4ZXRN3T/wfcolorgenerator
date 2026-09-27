@@ -1,6 +1,7 @@
 {
-    "name": "Warframe Color Picker",
-    "short_name": "WFcolorPicker",
+    "name": "Warframe Color Generator",
+    "short_name": "WFcolorGenerator",
+    "description": "A lightweight web‑app that produces random or tone‑specific color palettes for the game **Warframe**.",
     "icons": [
         {
             "src": "./images/android-chrome-192x192.png",
